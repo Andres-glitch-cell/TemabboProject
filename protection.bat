@@ -1,19 +1,33 @@
 @echo off
-title Protector de Archivo TXT
+title Acceso a Apuntes Temabbo (LOCAL)
+color 0A
+
 :PASS
+echo.
 set /p "clave=Introduce la contrasena: "
-if not "%clave%"=="TU_CONTRASEÑA" goto FAIL
 
-echo Contenido del archivo secreto:
-type secreto.txt
-pause > nul
+REM La clave correcta
+set "clave_correcta=Administrador@macOSTemabbo"
 
-goto END
+if /i "%clave%"=="%clave_correcta%" goto UNLOCK
 
 :FAIL
-echo Contrasena incorrecta.
+echo.
+echo ERROR: Contrasena incorrecta.
+echo El acceso ha sido denegado.
 pause > nul
 goto END
+
+:UNLOCK
+echo.
+echo ACCESO CONCEDIDO!
+echo -----------------------------------------------------------------
+REM Muestra el contenido del archivo secreto
+type ApuntesTemabbo.txt
+echo -----------------------------------------------------------------
+echo.
+echo [Presiona cualquier tecla para ocultar el contenido]
+pause > nul
 
 :END
 exit
