@@ -1,0 +1,134 @@
+MacOSSequoia_version_0.0.0
+
+---------- PASSWORD FOR .RAR ----------
+
+Emindres_Temabbo_vAlpha
+
+----------- CONEXION A PhpMyAdmin -----------
+
+http://localhost/phpmyadmin/
+
+---------------------------------------------
+
+Conectar a la macOS Server
+mysql -h 100.118.110.10 -P 3306 -u kali -p
+MacOSSequoia_version_0.0.0
+
+IP MacOS: 192.168.177.162 (Server IP ORIGINAL FIJA)
+
+IP MacOS Server TailScale: 100.118.110.10
+
+---------------
+
+
+PS C:\Users\Pc> Get-Content $env:USERPROFILE\.ssh\id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDTw5GVh6X+An5FlmjjM0bATVoIdhzBP0jR8NXVFS4VUZmDVpG68SNQyCB881cwTLu4zIcDxdWFBmK7AKqM5kLd1JRqi7OziGHaCcF7jRYbh+qhI6RDREuRiL5vAd+mcXfwJnmyDOCcno7GT77NAwih9wezOERI5s255WNooWOYvPmn6J/rBg3L7Fz++OEdaosxQMAAVL/WNOioyAFHAbxinNgRmteKljg8273cRfG53b6tMidIjtFeanhAfLWq2eY4lATDf6QWC5a8tP6EoGNyUG59gOI34EwE20cFfDIJlY1ooheXl0hntuHO9Cl1Bs2AyZcQcIM4OTX6QClundvUFeskjf+Cp0wIOlYarhj0/g9AO5ZcD4ApWmsoDk2smXUa5bYqMWrPzDcOQK9EpjEUbSem9KgYbJFyBPquCakSLR/E6hTXf3k7nbbuCWrgy6dZeY/xwec16mNeQUvrDuS6WBsnvkd9VFGsidI/mdnhb5DQbg/1ZUU38Ioz9PehXMaIH/DrXtSY0I/Ek4dgTDV3y4uHrO0aNmyoRMZcJ1OVwWA17IO8v3J2IonNmGlBPmVeUrvpdgBOJhQQ3th3AouQakb4J5J6W1mp4qV7Y9NEBevAkjw9MGVJCz1EPSqtFcj/OAQgBUsfy6/7bEvXIgcyoREMSZUkAe5fsy9JzrsCKQ== pc@DESKTOP-GPUMON5
+PS C:\Users\Pc>
+
+
+// Preguntar a achat si la clave publica es mejor o peor para la seguridad
+PasswordAuthentication yes   # (o no, según uses clave pública)
+PubkeyAuthentication yes
+
+-- Usuario administrador para phpMyAdmin desde localhost
+CREATE USER 'phpmyadmin'@'localhost' IDENTIFIED BY 'admin@phpmyadmin'; 
+GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost' WITH GRANT OPTION;
+
+-- Usuario administrador para Workbench (remoto)
+CREATE USER 'workbench_user'@'%' IDENTIFIED BY 'admin@mysqlworkbench'; 
+GRANT ALL PRIVILEGES ON *.* TO 'workbench_user'@'%';
+
+-- Usuario solo lectura para consultas remotas
+CREATE USER 'readonly'@'%' IDENTIFIED BY 'adminreadonly@sql'; 
+GRANT SELECT ON hello_mysql.* TO 'readonly'@'%';
+
+FLUSH PRIVILEGES;
+
+----------------------------------------
+
+CREATE USER 'andresadmin'@'100.119.170.116' IDENTIFIED BY 'kalitemabboandresadmin';
+GRANT ALL PRIVILEGES ON *.* TO 'andresadmin'@'100.119.170.116' WITH GRANT OPTION;
+
+CREATE USER 'emiadmin'@'100.119.170.116' IDENTIFIED BY 'kalitemabboemiadmin';
+GRANT ALL PRIVILEGES ON *.* TO 'emiadmin'@'100.119.170.116' WITH GRANT OPTION;
+
+FLUSH PRIVILEGES;
+EXIT;
+
+-----------------------------------------
+Para acceder a la carpeta COMPARTIDA DE WINDOWS las credenciales son:
+
+user: andresfernandezsalaud
+passwd: R00tR00t
+
+
+
+----------- COMO CONECTAR MI macOS Server con el Repositorio de GitHub -----------
+
+1.
+📁 ls -l
+Muestra los archivos actuales en el repositorio:
+
+LICENSE
+
+README.md
+
+✅ Confirma que el Excel fue eliminado, como querías.
+
+2.
+🔐 git config --global credential.helper osxkeychain
+Le estás diciendo a Git que, si alguna vez usas HTTPS, recuerde tus credenciales en el llavero de macOS.
+✅ Aunque ahora estás usando SSH, no pasa nada por tener esto también configurado.
+
+3.
+🔑 ssh-keygen -t ed25519 -C "afernandezs.iesjc@gmail.com"
+Intentaste generar una nueva clave SSH, pero ya tenías una:
+/Users/andresfernandezsalaud/.ssh/id_ed25519 already exists.
+Overwrite (y/n)? n
+✅ Elegiste no sobrescribirla (bien hecho).
+
+4.
+📋 pbcopy < ~/.ssh/id_ed25519.pub
+Copiaste tu clave pública al portapapeles para pegarla en GitHub.
+✅ Importante para autenticarte sin contraseña.
+
+5.
+🤖 eval "$(ssh-agent -s)"
+Iniciaste el agente SSH, que guarda en memoria tu clave privada para que no tengas que escribir tu passphrase cada vez.
+
+6.
+➕ ssh-add ~/.ssh/id_ed25519
+Le diste al agente SSH tu clave privada para que Git pueda usarla.
+
+✅ Resultado:
+Identity added: ...id_ed25519 (andresfernandezsalaud@Mac-mini-de-Andres.local)
+🌐 git remote set-url origin git@github.com:Andres-glitch-cell/Temabbo_Apuntes.git
+Cambiáste la URL de tu repo para que use SSH en lugar de HTTPS.
+
+Antes era:
+https://github.com/Andres-glitch-cell/Temabbo_Apuntes.git
+
+Ahora es:
+Editar
+git@github.com:Andres-glitch-cell/Temabbo_Apuntes.git
+✅ Esto evita que te vuelva a pedir usuario/token.
+
+
+7.
+🔒 ssh -T git@github.com
+Probaste tu conexión SSH con GitHub:
+
+Hi Andres-glitch-cell! You've successfully authenticated...
+✅ Todo listo. Estás conectado correctamente.
+
+8.
+🚀 git push origin main
+Comprobaste que podías hacer git push sin que te pida contraseña ni token.
+
+Everything up-to-date
+✅ El repo está actualizado. Todo funcionando.
+
+✅ Conclusión
+🎉 Ya estás completamente conectado por SSH a GitHub
+Puedes trabajar, subir cambios, y reiniciar tu servidor cuando quieras, sin volver a configurar nada.
+
